@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: servicea-v1
+  namespace: sample-namespace
+  labels:
+    app: servicea
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: servicea
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: servicea
+        version: v1
+    spec:
+      # serviceAccountName: bookinfo-servicea
+      containers:
+        - name: servicea
+          image: servicea:latest 
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 80 
+          volumeMounts:
+          - mountPath: /cache123/sample.txt
+            name: cache-volume
+      volumes:
+        - name: cache-volume
+          emptyDir: {}

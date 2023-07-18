@@ -1,0 +1,22 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: servicea
+  namespace: sample-namespace
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - sample-namespace/gateway
+  http:
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        host: servicea
+      headers:
+        request:
+        # To add a header we can use below method
+          add:
+            x-team: develop

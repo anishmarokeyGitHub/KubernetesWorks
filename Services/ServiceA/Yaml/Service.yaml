@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: servicea
+  namespace: sample-namespace
+  labels:
+    app: servicea
+    service: servicea
+spec:
+  ports:
+    - port: 80
+      name: http
+  selector:
+    app: servicea

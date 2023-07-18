@@ -1,7 +1,7 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
-  name: hrblock-ocap-gateway
+  name: gateway
   namespace: sample-namespace
 spec:
   selector:

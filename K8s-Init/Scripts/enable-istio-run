@@ -1,2 +1,3 @@
 // kubectl apply -f .\IstioCore\namespace-hrblock-ocap.yaml
 // kubectl label namespace sample-namespace  istio-injection=enabled   
+//istioctl install --set profile=demo 
