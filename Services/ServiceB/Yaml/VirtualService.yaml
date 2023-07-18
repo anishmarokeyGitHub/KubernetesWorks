@@ -1,7 +1,7 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
-  name: servicea
+  name: serviceb
   namespace: sample-namespace
 spec:
   hosts:
@@ -11,12 +11,7 @@ spec:
   http:
   - match:
     - uri:
-        prefix: /api
+        prefix: /
     route:
     - destination:
-        host: servicea
-      headers:
-        request:
-        # To add a header we can use below method
-          add:
-            x-team: develop
+        host: serviceb

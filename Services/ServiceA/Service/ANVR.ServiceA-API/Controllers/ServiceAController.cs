@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ANVR.ServiceA_API.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class ServiceAController : ControllerBase
 {
 
