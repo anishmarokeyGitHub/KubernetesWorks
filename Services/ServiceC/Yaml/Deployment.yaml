@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: servicec-v1
+  namespace: sample-namespace
+  labels:
+    app: servicec
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: servicec
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: servicec
+        version: v1
+      # annotations:
+      #   # We can't use volumes/volumeMounts on the container, because it comes from
+      #   # the injector.  Specify here as serialized JSON.
+      #   sidecar.istio.io/userVolume: '[{"name":"new-filter","configMap":{"name":"new-filter"}}]'
+      #   sidecar.istio.io/userVolumeMount: '[{"mountPath":"/var/local/lib/wasm-filters","name":"new-filter"}]'
+    spec:
+      # serviceAccountName: bookinfo-servicec
+      containers:
+        - name: servicec
+          image: servicec:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 80
