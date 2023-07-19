@@ -1,24 +1,44 @@
 apiVersion: networking.istio.io/v1alpha3
-kind: VirtualService
+kind: ServiceEntry
 metadata:
-  name: servicea
-  namespace: sample-namespace
+  name: github
 spec:
   hosts:
-    - "*"
-  gateways:
-    - sample-namespace/gateway
+  - "raw.githubusercontent.com"
+  location: MESH_EXTERNAL
+  ports:
+  - number: 443
+    name: https
+    protocol: TLS
+  resolution: DNS
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: webserver
+spec:
+  hosts:
+  - foo.com
   http:
   - match:
-    - headers:
-        end-user:
-          exact: jason
-      # uri:
-      #   prefix: "/"
-      ignoreUriCase: true
+    - uri:
+        regex: ".*"
+    rewrite:
+      uri: "/mcasperson/NodejsProxy/master/externalservice1.txt"
+      authority: raw.githubusercontent.com
     route:
     - destination:
-        host: serviceb
-  - route:
-    - destination:
-        host: servicec
+        host: raw.githubusercontent.com
+        port:
+          number: 443
+
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: github
+spec:
+  host: "raw.githubusercontent.com"
+  trafficPolicy:
+    tls:
+      mode: SIMPLE
